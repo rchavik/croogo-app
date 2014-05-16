@@ -1,58 +1,46 @@
 <?php
-/**
- * This is core configuration file.
- *
- * Use it to configure core behavior of Cake.
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Config
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
+
+$config = [
 
 /**
  * CakePHP Debug Level:
  *
  * Production Mode:
- * 	0: No error messages, errors, or warnings shown. Flash messages redirect.
+ * 0: No error messages, errors, or warnings shown. Flash messages redirect.
  *
  * Development Mode:
- * 	1: Errors and warnings shown, model caches refreshed, flash messages halted.
- * 	2: As in 1, but also with full debug messages and SQL output.
+ * 1: Errors and warnings shown, model caches refreshed, flash messages halted.
+ * 2: As in 1, but also with full debug messages and SQL output.
  *
- * In production mode, flash messages redirect after a time interval.
- * In development mode, you need to click the flash message to continue.
  */
-Configure::write('debug', 1);
+	'debug' => 1,
 
-/**
- * Configure the Error handler used to handle errors for your application.  By default
- * ErrorHandler::handleError() is used.  It will display errors using Debugger, when debug > 0
- * and log errors with CakeLog when debug = 0.
- *
- * Options:
- *
- * - `handler` - callback - The callback to handle errors. You can set this to any callback type,
- *    including anonymous functions.
- * - `level` - int - The level of errors you are interested in capturing.
- * - `trace` - boolean - Include stack traces for errors in log files.
- *
- * @see ErrorHandler for more information on error handling and configuration.
- */
-Configure::write('Error', array(
-	'handler' => 'ErrorHandler::handleError',
-	'level' => E_ALL & ~E_DEPRECATED,
-	'trace' => true
-));
+	'App' => [
+		'namespace' => 'App',
+		'encoding' => 'UTF-8',
+		'base' => false,
+		'dir' => 'App',
+		'webroot' => 'webroot',
+		'www_root' => WWW_ROOT,
+		'baseUrl' => env('SCRIPT_NAME'),
+		'fullBaseUrl' => false,
+		'imageBaseUrl' => 'img/',
+		'cssBaseUrl' => 'css/',
+		'jsBaseUrl' => 'js/',
+		'paths' => [
+			'plugins' => [ROOT . '/Plugin/', 'vendor/croogo/croogo'],
+			'templates' => [APP . 'Template/'],
+		],
+	],
+
+	'Error' => [
+		'errorLevel' => E_ALL & ~E_DEPRECATED,
+		'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
+		'skipLog' => [],
+		'log' => true,
+		'trace' => true,
+	],
+];
 
 /**
  * Configure the Exception handler used for uncaught exceptions.  By default,
@@ -188,6 +176,16 @@ Configure::write('Security.salt', 'f78b12a5c38e9e5c6ae6fbd0ff1f46c77a1e305d');
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
 Configure::write('Security.cipherSeed', '60170779348589376');
+
+/**
+ * Apply timestamps with the last modified time to static assets (js, css, images).
+ * Will append a querystring parameter containing the time the file was modified. This is
+ * useful for invalidating browser caches.
+ *
+ * Set to `true` to apply timestamps when debug > 0. Set to 'force' to always enable
+ * timestamping regardless of debug value.
+ */
+//Configure::write('Asset.timestamp', true);
 
 /**
  * Compress CSS output by removing comments, whitespace, repeating tags, etc.
