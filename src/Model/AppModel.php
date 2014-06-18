@@ -1,6 +1,6 @@
 <?php
 
-App::uses('CroogoAppModel', 'Croogo.Model');
+use Croogo\Croogo\Model\CroogoAppModel;
 
 /**
  * Base Application model
