@@ -43,7 +43,7 @@ $repos = array(
 	'croogo' => array(
 		'url' => 'http://github.com/croogo/croogo',
 		'target' => 'Vendor/croogo/croogo',
-		'branch' => '2.0',
+		'branch' => 'master',
 	),
 	'Ckeditor' => array(
 		'url' => 'http://github.com/croogo/Ckeditor',
