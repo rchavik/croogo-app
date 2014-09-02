@@ -20,13 +20,12 @@
 			"homepage": "http://dontkry.com"
 		}
 	],
-	"minimum-stability": "dev",
 	"config": {
 		"vendor-dir": "Vendor"
 	},
 	"require": {
 		"php": ">=5.3.10",
-		"croogo/croogo": "~2.0",
+		"croogo/croogo": "~2.1",
 		"cakephp/cakephp": "~2.5"
 	},
 	"require-dev": {
