@@ -27,6 +27,7 @@
  */
 App::uses('CroogoRouter', 'Croogo.Lib');
 CroogoRouter::routes();
-Router::parseExtensions('json', 'rss');
+Router::parseExtensions();
+Router::setExtensions(array('json', 'rss'));
 CroogoRouter::localize();
 require CAKE . 'Config' . DS . 'routes.php';
