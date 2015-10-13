@@ -285,8 +285,8 @@ Configure::write('Acl.database', 'default');
  * If running via cli - apc is disabled by default. ensure it's available and enabled in this case
  *
  */
-$engine = 'File';
-Configure::write('Cache.defaultEngine', $engine);
+$cacheDefaultEngine = 'File';
+Configure::write('Cache.defaultEngine', $cacheDefaultEngine);
 if (extension_loaded('apc') && (php_sapi_name() !== 'cli' || ini_get('apc.enable_cli'))) {
 	$engine = 'Apc';
 }
@@ -298,29 +298,33 @@ if (Configure::read('debug') >= 1) {
 }
 
 // Prefix each application on the same server with a different string, to avoid Memcache and APC conflicts.
-$prefix = 'croogo_';
-Configure::write('Cache.defaultPrefix', $prefix);
+$cacheDefaultPrefix = 'croogo_';
+Configure::write('Cache.defaultPrefix', $cacheDefaultPrefix);
+
+$cacheDefaultConfig = array(
+	'duration' => '+1 hour',
+	'engine' => $cacheDefaultEngine,
+	'prefix' => $cacheDefaultPrefix,
+	'duration' => $duration,
+);
+Configure::write('Cache.defaultConfig', $cacheDefaultConfig);
 
 /**
  * Configure the cache used for general framework caching.  Path information,
  * object listings, and translation cache files are stored with this configuration.
  */
 Cache::config('_cake_core_', array(
-	'engine' => $engine,
-	'prefix' => $prefix . 'cake_core_',
+	'prefix' => $cacheDefaultPrefix . 'cake_core_',
 	'path' => CACHE . 'persistent' . DS,
-	'serialize' => ($engine === 'File'),
-	'duration' => $duration
-));
+	'serialize' => ($cacheDefaultEngine === 'File'),
+) + $cacheDefaultConfig);
 
 /**
  * Configure the cache for model and datasource caches.  This cache configuration
  * is used to store schema descriptions, and table listings in connections.
  */
 Cache::config('_cake_model_', array(
-	'engine' => $engine,
-	'prefix' => $prefix . 'cake_model_',
+	'prefix' => $cacheDefaultPrefix . 'cake_model_',
 	'path' => CACHE . 'models' . DS,
-	'serialize' => ($engine === 'File'),
-	'duration' => $duration
-));
+	'serialize' => ($cacheDefaultEngine === 'File'),
+) + $cacheDefaultConfig);
